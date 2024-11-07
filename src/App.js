@@ -1,36 +1,59 @@
-// src/App.js
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Asegúrate de usar estos componentes
-import Login from './Login'; // El componente de inicio de sesión
-import Inbox from './Inbox'; // El componente de la bandeja de entrada (crea este archivo si no lo tienes)
-import SendMail from './SendMail'; // El componente de enviar correo
+import Inbox from './Inbox'; // Asegúrate de que tus componentes están correctamente importados
+import SendMail from './SendMail'; // También importar el componente de enviar correo
+import Login from './Login'; // Importar Login
 
-function App() {
+const App = () => {
+  // Estado para controlar qué vista se está mostrando
+  const [vistaActiva, setVistaActiva] = useState('login'); // 'login' es la vista inicial
+
+  // Función para cambiar la vista
+  const cambiarVista = (vista) => {
+    setVistaActiva(vista);
+  };
+
   return (
-    <Router>
-      <div className="App">
-        <h1>Bienvenido a la aplicación de correo</h1>
-        {/* Menú de navegación */}
+    <div className="App">
+      <div className="sidebar">
+        <div className="logo-container">
+          <img src="/YIMEIL.png" alt="Logo YIMEIL" className="logo-img" />
+          <h2 className="logo">YIMEIL</h2>
+        </div>
+
         <nav>
           <ul>
-            <li><a href="/">Inicio</a></li>
-            <li><a href="/login">Iniciar sesión</a></li>
-            <li><a href="/inbox">Bandeja de Entrada</a></li>
-            <li><a href="/send-mail">Enviar Correo</a></li>
+            <li><a onClick={() => cambiarVista('login')}>Iniciar sesión</a></li>
+            <li><a onClick={() => cambiarVista('bandeja')}>Bandeja de Entrada</a></li>
+            <li><a onClick={() => cambiarVista('enviar')}>Enviar Mensaje</a></li>
           </ul>
         </nav>
-
-        {/* Definir las rutas para los diferentes componentes */}
-        <Routes>
-          <Route path="/" element={<h2>Inicio</h2>} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/inbox" element={<Inbox />} />
-          <Route path="/send-mail" element={<SendMail />} />
-        </Routes>
       </div>
-    </Router>
+
+      <div className="main-content">
+        {/* Renderizado condicional de las vistas */}
+        {vistaActiva === 'login' && (
+          <div className="capa">
+            <h2>Iniciar sesión</h2>
+            <Login />
+          </div>
+        )}
+
+        {vistaActiva === 'bandeja' && (
+          <div className="capa">
+            <Inbox />
+          </div>
+        )}
+
+        {vistaActiva === 'enviar' && (
+          <div className="capa">
+            <SendMail />
+          </div>
+        )}
+      </div>
+    </div>
   );
-}
+};
 
 export default App;
+
