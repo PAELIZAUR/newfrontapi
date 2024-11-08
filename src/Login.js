@@ -1,13 +1,42 @@
 import React, { useState } from 'react';
 
-const Login = () => {
+const Login = ({ manejarToken }) => {
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
+  const [error, setError] = useState(''); // Para mostrar errores de autenticación
+  const [cargando, setCargando] = useState(false); // Para mostrar un estado de carga
 
-  const manejarSubmit = (e) => {
+  const manejarSubmit = async (e) => {
     e.preventDefault();
-    // Aquí podrías agregar lógica para autenticar al usuario
-    console.log('Iniciar sesión con', usuario, contrasena);
+    setCargando(true);
+    setError(''); // Limpiar el error antes de realizar la solicitud
+
+    // Llamada a la API para autenticar al usuario
+    try {
+      const response = await fetch('http://localhost:8080/api/login', { // Cambia esta URL según tu backend
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ usuario, contrasena }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        // Si la respuesta es exitosa, obtenemos el token
+        const token = result.token; // Suponiendo que el token viene en result.token
+        manejarToken(token); // Pasamos el token al componente App.js
+        console.log('Token recibido:', token);
+      } else {
+        // Si hay un error en la respuesta
+        setError(result.message || 'Error al autenticar');
+      }
+    } catch (error) {
+      setError('Hubo un problema al conectar con el servidor');
+    } finally {
+      setCargando(false); // Finalmente, cambiamos el estado de carga
+    }
   };
 
   return (
@@ -32,7 +61,10 @@ const Login = () => {
           placeholder="Ingrese su contraseña"
         />
       </div>
-      <button type="submit">Iniciar sesión</button>
+      {error && <div style={{ color: 'red' }}>{error}</div>}
+      <button type="submit" disabled={cargando}>
+        {cargando ? 'Cargando...' : 'Iniciar sesión'}
+      </button>
     </form>
   );
 };

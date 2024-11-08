@@ -8,7 +8,7 @@
 
 /* Barra lateral */
 .sidebar {
-  background-color: #202124; /* Gris oscuro como Gmail */
+  background-color: #202124;
   color: white;
   width: 250px;
   padding: 20px;
@@ -16,7 +16,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  height: 100vh; /* Asegura que ocupe toda la altura */
+  height: 100vh;
 }
 
 /* Logo y texto en la barra lateral */
@@ -37,7 +37,7 @@
   font-size: 1.5rem;
   font-weight: bold;
   margin: 0;
-  color: #fff; /* Asegura que el texto sea blanco */
+  color: #fff;
 }
 
 /* Estilos de los enlaces de la barra lateral */
@@ -60,30 +60,28 @@
   transition: background-color 0.3s;
 }
 
-/* Colores de hover como Gmail */
 .sidebar nav ul li a:hover {
-  background-color: #1a2585; /* Verde similar al color de Gmail */
+  background-color: #1a2585;
 }
 
 /* Contenido principal */
 .main-content {
   flex: 1;
   padding: 20px;
-  background-color: #e7e1e1; /* Fondo claro como Gmail */
+  background-color: #e7e1e1;
   overflow-y: auto;
   display: flex;
-  justify-content: center; /* Centrado horizontal */
-  align-items: center;     /* Centrado vertical */
+  justify-content: center;
+  align-items: center;
 }
 
-/* Aseguramos que cada vista ocupe todo el espacio disponible */
 .capa {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 600px; /* Limitar el tamaño para que no se expanda demasiado */
+  max-width: 600px;
   padding: 20px;
   background-color: rgb(252, 251, 251);
   border-radius: 8px;
@@ -102,24 +100,46 @@ form {
   width: 100%;
 }
 
+/* Ajuste de los campos del formulario */
 form div {
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Etiquetas de formulario */
+form label {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* Estilos de entrada de texto */
+form input, form textarea, form button {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 form input {
-  padding: 10px;
-  font-size: 16px;
   border: 1px solid #ccc;
-  border-radius: 4px;
 }
 
+/* Estilo del campo de mensajes (textarea) */
+form textarea {
+  resize: vertical;
+  min-height: 100px;
+  border: 1px solid #ccc;
+}
+
+/* Estilo del botón */
 form button {
-  padding: 10px;
-  font-size: 16px;
   background-color: #333;
   color: rgb(249, 250, 250);
   border: none;
-  border-radius: 4px;
   cursor: pointer;
 }
 

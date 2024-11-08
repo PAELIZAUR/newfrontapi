@@ -1,17 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import Inbox from './Inbox'; // Asegúrate de que tus componentes están correctamente importados
-import SendMail from './SendMail'; // También importar el componente de enviar correo
-import Login from './Login'; // Importar Login
+import Inbox from './Inbox';
+import SendMail from './SendMail';
+import Login from './Login';
+import { enviarCorreo, obtenerCorreos, obtenerDetallesCorreo } from './EmailService';
 
 const App = () => {
-  // Estado para controlar qué vista se está mostrando
-  const [vistaActiva, setVistaActiva] = useState('login'); // 'login' es la vista inicial
+  const [vistaActiva, setVistaActiva] = useState('login');
+  const [correos, setCorreos] = useState([]);
+  const [token, setToken] = useState(null); // Guardamos el token
 
   // Función para cambiar la vista
   const cambiarVista = (vista) => {
     setVistaActiva(vista);
   };
+
+  // Función que se ejecuta cuando se obtiene el token
+  const manejarToken = (nuevoToken) => {
+    setToken(nuevoToken);
+  };
+
+  // Función para obtener los correos
+  const obtenerCorreosBandeja = async () => {
+    if (token) {
+      const result = await obtenerCorreos(token);
+      if (result.success) {
+        setCorreos(result.data);
+      } else {
+        console.error('Error al obtener los correos:', result.message);
+      }
+    } else {
+      console.error('No hay token de autenticación.');
+    }
+  };
+
+  // Función para manejar el envío de un correo
+  const handleEnviarCorreo = async (data) => {
+    if (token) {
+      const result = await enviarCorreo(data, token); // Pasamos el token aquí también
+      if (result.success) {
+        console.log('Correo enviado:', result.message);
+      } else {
+        console.error('Error al enviar correo:', result.message);
+      }
+    } else {
+      console.error('No hay token de autenticación.');
+    }
+  };
+
+  // Llamamos a la función para obtener los correos cuando la vista es 'bandeja'
+  useEffect(() => {
+    if (vistaActiva === 'bandeja') {
+      obtenerCorreosBandeja();
+    }
+  }, [vistaActiva, token]); // Dependemos de token también
 
   return (
     <div className="App">
@@ -31,23 +73,22 @@ const App = () => {
       </div>
 
       <div className="main-content">
-        {/* Renderizado condicional de las vistas */}
         {vistaActiva === 'login' && (
           <div className="capa">
             <h2>Iniciar sesión</h2>
-            <Login />
+            <Login manejarToken={manejarToken} />
           </div>
         )}
 
         {vistaActiva === 'bandeja' && (
           <div className="capa">
-            <Inbox />
+            <Inbox correos={correos} />
           </div>
         )}
 
         {vistaActiva === 'enviar' && (
           <div className="capa">
-            <SendMail />
+            <SendMail handleEnviarCorreo={handleEnviarCorreo} />
           </div>
         )}
       </div>
@@ -56,4 +97,3 @@ const App = () => {
 };
 
 export default App;
-
