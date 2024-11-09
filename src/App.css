@@ -8,7 +8,7 @@
 
 /* Barra lateral */
 .sidebar {
-  background-color: #202124;
+  background-color: #202124; /* Gris oscuro de la barra lateral de Gmail */
   color: white;
   width: 250px;
   padding: 20px;
@@ -31,6 +31,11 @@
   width: 40px;
   height: 40px;
   margin-right: 10px;
+}
+.bienvenida .logo-img {
+  width: 150px; /* Tamaño más grande para el logo en la bienvenida */
+  height: auto;
+  margin-bottom: 20px;
 }
 
 .sidebar .logo {
@@ -61,20 +66,21 @@
 }
 
 .sidebar nav ul li a:hover {
-  background-color: #1a2585;
+  background-color: #1a73e8; /* Azul de Gmail */
 }
 
 /* Contenido principal */
 .main-content {
   flex: 1;
   padding: 20px;
-  background-color: #e7e1e1;
+  background-color: #f1f3f4; /* Gris claro de Gmail */
   overflow-y: auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/* Estilos para la capa de contenido */
 .capa {
   display: flex;
   flex-direction: column;
@@ -88,16 +94,40 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
-  font-size: 2rem;
-  margin: 20px 0;
+/* Estilo para la pantalla de bienvenida */
+.bienvenida {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  background-color: #f4f4f4; /* Gris claro de Gmail */
   text-align: center;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+.bienvenida h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.bienvenida p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.bienvenida button {
+  padding: 10px 20px;
+  background-color: #1a73e8; /* Azul de Gmail */
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.bienvenida button:hover {
+  background-color: #0c59b3; /* Azul más oscuro */
 }
 
 /* Ajuste de los campos del formulario */

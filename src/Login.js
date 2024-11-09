@@ -13,7 +13,7 @@ const Login = ({ manejarToken }) => {
 
     // Llamada a la API para autenticar al usuario
     try {
-      const response = await fetch('http://localhost:8080/api/login', { // Cambia esta URL según tu backend
+      const response = await fetch('https://poo2024.unsada.edu.ar/cuentas/login', { // Cambia esta URL según tu backend
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
-// EmailService.js
 const BASE_URL = 'http://localhost:8080'; // Asegúrate de que esta sea la URL correcta de tu servidor
 
+// Función para enviar un correo
 const enviarCorreo = async (data) => {
   try {
     const response = await fetch(`${BASE_URL}/emails`, {
@@ -16,7 +16,8 @@ const enviarCorreo = async (data) => {
     if (response.ok) {
       return { success: true, message: 'Correo enviado exitosamente', data: result };
     } else {
-      return { success: false, message: result.message };
+      console.error('Error al enviar el correo:', result);
+      return { success: false, message: result.message || 'Error desconocido al enviar el correo' };
     }
   } catch (error) {
     console.error('Error al enviar el correo:', error);
@@ -24,6 +25,7 @@ const enviarCorreo = async (data) => {
   }
 };
 
+// Función para obtener los correos
 const obtenerCorreos = async (token) => {
   try {
     const response = await fetch(`${BASE_URL}/emails`, {
@@ -39,7 +41,8 @@ const obtenerCorreos = async (token) => {
     if (response.ok) {
       return { success: true, data: result };
     } else {
-      return { success: false, message: result.message };
+      console.error('Error al obtener los correos:', result);
+      return { success: false, message: result.message || 'Error desconocido al obtener los correos' };
     }
   } catch (error) {
     console.error('Error al obtener los correos:', error);
@@ -47,6 +50,7 @@ const obtenerCorreos = async (token) => {
   }
 };
 
+// Función para obtener detalles de un correo específico
 const obtenerDetallesCorreo = async (emailId, token) => {
   try {
     const response = await fetch(`${BASE_URL}/emails/${emailId}`, {
@@ -62,7 +66,8 @@ const obtenerDetallesCorreo = async (emailId, token) => {
     if (response.ok) {
       return { success: true, data: result };
     } else {
-      return { success: false, message: result.message };
+      console.error('Error al obtener los detalles del correo:', result);
+      return { success: false, message: result.message || 'Error desconocido al obtener los detalles del correo' };
     }
   } catch (error) {
     console.error('Error al obtener los detalles del correo:', error);
